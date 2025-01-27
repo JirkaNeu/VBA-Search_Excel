@@ -2,18 +2,16 @@ Private Sub Cmd_Btn_CheckName_Click()
 
 If Worksheets("collection").FilterMode Then Worksheets("collection").ShowAllData ' reset Filter
 
-
-'Bitte einen Suchbegriff eingeben
-If UnternehmenEingabe.UN_Name.Value = "" Then
+'Input 
+If Eingabe.UN_Name.Value = "" Then
     MsgBox "Please enter a name or term to search for.", vbOKOnly + vbInformation, "Attention"
-    UnternehmenEingabe.UN_Name.SetFocus
+    Eingabe.UN_Name.SetFocus
     Exit Sub
 End If
-'Bitte einen Suchbegriff eingeben
-
+'Input
 
 Dim SBegriff
-SBegriff = UnternehmenEingabe.UN_Name.Value
+SBegriff = Eingabe.UN_Name.Value
 
     Dim c
     Dim cErst
@@ -65,11 +63,11 @@ SBegriff = UnternehmenEingabe.UN_Name.Value
 
 'If ic = 1 Then
 '    MsgBox "Not found.", vbOKOnly + vbInformation, "Attention"
-'    Else: UnternehmenEingabe.Ergebnis_Auswahl.Text = "Show results / choose entry"
+'    Else: Eingabe.Ergebnis_Auswahl.Text = "Show results / choose entry"
 'End If
 
 If i = 1 Then
-            MsgBox "No matching Name found." & vbNewLine & vbNewLine & "Please varify manually.", vbOKOnly + vbInformation, "Attention"
+            MsgBox "No matching term found." & vbNewLine & vbNewLine & "Please varify manually.", vbOKOnly + vbInformation, "Attention"
 ElseIf i > 1 And i < 16 Then
             MsgBox "Found one or more similar entries:" & vbNewLine & vbNewLine & AusgabeMSG, vbOKOnly + vbInformation, "Attention"
 ElseIf i > 15 Then
