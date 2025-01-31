@@ -4,6 +4,7 @@ Sub Btn_doSearch_Click()
 sheet_name = "collection"
 column_ids = 1
 col2search = 2
+max_result = 15
 '-----------------------------------------'
 
 'Input
@@ -60,10 +61,10 @@ SBegriff = input_term
 
 If i = 1 Then
             MsgBox "No matching term found." & vbNewLine & vbNewLine & "Please varify manually.", vbOKOnly + vbInformation, "Attention"
-ElseIf i > 1 And i < 16 Then
+ElseIf i > 1 And i < max_result + 1 Then
             MsgBox "Found one or more similar entries:" & vbNewLine & vbNewLine & AusgabeMSG, vbOKOnly + vbInformation, "Attention"
-ElseIf i > 15 Then
-            MsgBox "More than 15 similar entries with ''" & SBegriff & "'' found in working sheet." & vbNewLine & vbNewLine & "Please check to avoid redundancies.", vbOKOnly + vbInformation, "Attention"
+ElseIf i > max_result Then
+            MsgBox "More than ''" & max_result & "'' similar entries with ''" & SBegriff & "'' found in working sheet." & vbNewLine & vbNewLine & "Please check manually.", vbOKOnly + vbInformation, "Attention"
 End If
 
 End Sub
