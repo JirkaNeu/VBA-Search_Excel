@@ -1,6 +1,8 @@
 Sub Btn_doSearch_Click()
 
 '-----------------------------------------'
+sheet_name = "collection"
+column_ids = 1
 col2search = 2
 '-----------------------------------------'
 
@@ -13,7 +15,7 @@ If input_term = "" Then
 End If
 'Input
 
-If Worksheets("collection").FilterMode Then Worksheets("collection").ShowAllData ' reset Filter
+If Worksheets(sheet_name).FilterMode Then Worksheets(sheet_name).ShowAllData ' reset Filter
 
 Dim SBegriff
 SBegriff = input_term
@@ -32,7 +34,7 @@ SBegriff = input_term
     Dim AusgabeMSG
 
     '***********************************
-    With Worksheets("collection").Columns(col2search)
+    With Worksheets(sheet_name).Columns(col2search)
         Set c = .Find(SBegriff, LookIn:=xlValues, LookAt:=xlPart, MatchCase:=False) 'LookIn:=xlValues ignores Formula in cells
         If Not c Is Nothing Then
             c1st = c.Address
@@ -43,8 +45,8 @@ SBegriff = input_term
             ReDim ErgebWert1(ice)
             ReDim ErgebWert2(ice)
             Do
-                ErgebWert1(ic) = Worksheets("collection").Cells(c.Row, col2search).Value 'read name
-                ErgebWert2(ic) = Worksheets("collection").Cells(c.Row, 1).Value 'read ID
+                ErgebWert1(ic) = Worksheets(sheet_name).Cells(c.Row, col2search).Value 'read name
+                ErgebWert2(ic) = Worksheets(sheet_name).Cells(c.Row, column_ids).Value 'read ID
             ic = ic + 1
             Set c = .FindNext(c)
             Loop While Not c Is Nothing And c.Address <> c1st
