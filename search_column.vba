@@ -1,20 +1,25 @@
-Private Sub Cmd_Btn_CheckName_Click()
+Sub Btn_doSearch_Click()
 
-If Worksheets("collection").FilterMode Then Worksheets("collection").ShowAllData ' reset Filter
+'-----------------------------------------'
+col2search = 2
+'-----------------------------------------'
 
-'Input 
-If Eingabe.UN_Name.Value = "" Then
-    MsgBox "Please enter a name or term to search for.", vbOKOnly + vbInformation, "Attention"
-    Eingabe.UN_Name.SetFocus
+'Input
+input_term = InputBox("Please enter name or term to search for.", "Search")
+
+If input_term = "" Then
+    MsgBox "No entry made. Please try again and enter a name or term to search for.", vbOKOnly + vbInformation, "Attention"
     Exit Sub
 End If
 'Input
 
+If Worksheets("collection").FilterMode Then Worksheets("collection").ShowAllData ' reset Filter
+
 Dim SBegriff
-SBegriff = Eingabe.UN_Name.Value
+SBegriff = input_term
 
     Dim c
-    Dim cErst
+    Dim c1st
     Dim ic
     ic = 1
     Dim ice
@@ -27,44 +32,29 @@ SBegriff = Eingabe.UN_Name.Value
     Dim AusgabeMSG
 
     '***********************************
-    With Worksheets("collection").Columns(4)
-    
+    With Worksheets("collection").Columns(col2search)
         Set c = .Find(SBegriff, LookIn:=xlValues, LookAt:=xlPart, MatchCase:=False) 'LookIn:=xlValues ignores Formula in cells
-
         If Not c Is Nothing Then
-        
-            cErst = c.Address
-            
+            c1st = c.Address
             Do
                 ice = ice + 1
                 Set c = .FindNext(c)
-            Loop While Not c Is Nothing And c.Address <> cErst
-            
+            Loop While Not c Is Nothing And c.Address <> c1st
             ReDim ErgebWert1(ice)
             ReDim ErgebWert2(ice)
-            
             Do
-                ErgebWert1(ic) = Worksheets("collection").Cells(c.Row, 4).Value 'read name
+                ErgebWert1(ic) = Worksheets("collection").Cells(c.Row, col2search).Value 'read name
                 ErgebWert2(ic) = Worksheets("collection").Cells(c.Row, 1).Value 'read ID
-
             ic = ic + 1
             Set c = .FindNext(c)
-            Loop While Not c Is Nothing And c.Address <> cErst
-            
+            Loop While Not c Is Nothing And c.Address <> c1st
             Do
                 AusgabeMSG = AusgabeMSG & i & ". " & ErgebWert1(i) & " (ID: " & ErgebWert2(i) & ")" & vbNewLine
                 i = i + 1
             Loop While i <> ic
-        
         End If
-    
     End With
     '***********************************
-
-'If ic = 1 Then
-'    MsgBox "Not found.", vbOKOnly + vbInformation, "Attention"
-'    Else: Eingabe.Ergebnis_Auswahl.Text = "Show results / choose entry"
-'End If
 
 If i = 1 Then
             MsgBox "No matching term found." & vbNewLine & vbNewLine & "Please varify manually.", vbOKOnly + vbInformation, "Attention"
