@@ -2,8 +2,8 @@ Sub Btn_doSearch_Click()
 
 '-----------------------------------------'
 sheet_name = "collection"
-column_ids = 1
-col2search = 2
+column_ids = 1 ' first column is reserved for id-numbers
+col2search = 2 ' 2nd column 2 be searched
 max_result = 15
 '-----------------------------------------'
 
@@ -11,7 +11,7 @@ max_result = 15
 input_term = InputBox("Please enter name or term to search for.", "Search")
 
 If input_term = "" Then
-    MsgBox "No entry made. Please try again and enter a name or term to search for.", vbOKOnly + vbInformation, "Attention"
+    MsgBox "Nothing entered. Please try again and enter a name or term to search for.", vbOKOnly + vbInformation, "Attention"
     Exit Sub
 End If
 'Input
